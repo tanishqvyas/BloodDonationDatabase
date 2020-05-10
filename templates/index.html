@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Database</title>
+
+	<style type="text/css">
+		*{
+			padding: 0px;
+			margin: 0px;
+		}
+		body
+		{
+			background-color:#f4f4f4;
+		}
+
+		#header h2
+		{
+			margin: 0px;
+			background-color: #7e9ea1;
+			color : #fdfde2;
+			padding: 30px;
+			text-align: center;
+			box-shadow: 1px 1px 5px;
+			position: sticky;
+		}
+
+		.errormsg
+		{
+			color: red;
+		}
+
+		#queryarea, #resultarea
+		{
+			padding: 30px;
+			margin: 30px;
+			box-shadow: 3px 3px 6px;
+			background-color: #f3f3f3;
+			border-radius: 20px;
+		}
+
+		#queryarea h2
+		{
+			color: #567476;
+		}
+
+		table
+		{
+			width: 100%;
+			border: 1px solid black;
+  			border-collapse: collapse;
+		}
+
+		th, td 
+		{
+  			border: 1px solid black;
+  			border-collapse: collapse;
+			text-align: center;
+		}
+
+		button
+		{
+			background-color: #00e600;
+			padding: 10px;
+			border-radius: 50px;
+		}
+
+		textarea
+		{
+			border-radius: 10px;
+			margin-bottom: 20px;
+			padding: 10px;
+			min-height :150px;
+			min-width: 1700px;
+			max-width: 1700px;
+			max-height: 250px;
+		}
+
+		textarea:focus
+		{
+			outline: none;
+		}
+
+
+	</style>
+
+
+</head>
+<body>
+
+	<div id="header">
+		<h2>Blood Donation Camp</h2>
+	</div>
+
+
+	<div id = "queryarea" >
+		
+		<h2> Insert Your Query Here</h2><br><br>
+		<form method="post">
+			<textarea name="inputquery" cols="200" rows="10">
+			</textarea>
+			<br>
+			<button type="submit" value="Submit">Execute Query</button>
+		</form>
+	</div>
+
+
+	<div id="resultarea">
+
+		<h3>Query Results</h3><br><br>
+
+		{% if error == 1 %}
+
+			<h2 class = "errormsg">Error</h2>
+			<h3>{{ msg }}</h3>
+			<br>
+			<h2 class="errormsg">For the query</h2>
+			<p>{{ myquery }}</p>
+		{% else %}
+
+
+			{% if show == 1 %}
+
+				<table>
+					<tr>
+						{% for header in results[0].keys() %}
+					        <th>{{ header }}</th>
+						{% endfor %}
+				    </tr>
+
+				    {% for item in results %}
+					<tr> 
+						{% for values in item.values() %}
+						        <td>{{ values }}</td>
+						{% endfor %}	 
+					</tr>
+				    {% endfor %}
+				</table>
+			{% else %}
+				<h2 class="errormsg" >{{ msg }}</h2>
+				<br>
+				<h2 class="errormsg">For the query</h2>
+				<p>{{ myquery }}</p>
+			{% endif %}
+
+		{% endif %}	
+	</div>
+
+</body>
+</html>
